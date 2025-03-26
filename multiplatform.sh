@@ -116,12 +116,12 @@ declare -A debian
 ubuntu["apt"]="build-essential libsasl2-dev python3-dev libldap2-dev libssl-dev net-tools libreadline-dev zlib1g-dev gnupg2 python3-venv nmap apache2 docker.io hashcat hydra-gtk gobuster dirb hping3 john cewl smbmap whatweb sendemail socat wine64"
 ubuntu["snap"]="sqlmap enum4linux"
 ubuntu["pip"]="wheel pyOpenSSL==24.0.0 lxml==4.9.3 setuptools certipy-ad kerbrute bloodhound impacket"
-ubuntu["git"]="https://github.com/Pennyw0rth/NetExec https://github.com/sullo/nikto.git https://github.com/0x00-0x00/ligolo-ng https://github.com/iphelix/dnschef.git https://github.com/GoSecure/ldap-scanner.git https://github.com/dirkjanm/adidnsdump https://github.com/VitoBonetti/ADenum.git https://github.com/ozguralp/gmapsapiscanner.git https://github.com/njcve/inflate.py https://github.com/dirkjanm/ROADtools.git"
+ubuntu["git"]="https://github.com/Pennyw0rth/NetExec https://github.com/sullo/nikto.git https://github.com/0x00-0x00/ligolo-ng https://github.com/iphelix/dnschef.git https://github.com/GoSecure/ldap-scanner.git https://github.com/dirkjanm/adidnsdump https://github.com/VitoBonetti/ADenum.git https://github.com/ozguralp/gmapsapiscanner.git https://github.com/njcve/inflate.py https://github.com/dirkjanm/ROADtools.git https://github.com/NH-RED-TEAM/RustHound.git"
 
 debian["apt"]="build-essential libsasl2-dev python3-dev libldap2-dev libssl-dev net-tools libreadline-dev zlib1g-dev gnupg2 python3-venv nmap apache2 docker.io hashcat hydra-gtk gobuster dirb hping3 john cewl smbmap whatweb sendemail socat wine64 git snapd plocate"
 debian["snap"]="sqlmap enum4linux"
 debian["pip"]="wheel pyOpenSSL==24.0.0 lxml==4.9.3 setuptools certipy-ad kerbrute bloodhound impacket"
-debian["git"]="https://github.com/Pennyw0rth/NetExec https://github.com/sullo/nikto.git https://github.com/0x00-0x00/ligolo-ng https://github.com/iphelix/dnschef.git https://github.com/GoSecure/ldap-scanner.git https://github.com/dirkjanm/adidnsdump https://github.com/VitoBonetti/ADenum.git https://github.com/ozguralp/gmapsapiscanner.git https://github.com/njcve/inflate.py https://github.com/dirkjanm/ROADtools.git"
+debian["git"]="https://github.com/Pennyw0rth/NetExec https://github.com/sullo/nikto.git https://github.com/0x00-0x00/ligolo-ng https://github.com/iphelix/dnschef.git https://github.com/GoSecure/ldap-scanner.git https://github.com/dirkjanm/adidnsdump https://github.com/VitoBonetti/ADenum.git https://github.com/ozguralp/gmapsapiscanner.git https://github.com/njcve/inflate.py https://github.com/dirkjanm/ROADtools.git https://github.com/NH-RED-TEAM/RustHound.git"
 
 order=("apt" "pip" "snap" "git")
 
@@ -282,7 +282,24 @@ else
 	echo -e "${R}[-] Failed to install garble!${N}"
 	echo -e "${C}[>] Continuing...${N}"
 fi
+
 cd ~/Git
+
+cd RustHound
+echo -e "${B}[*] Installing RustHound...${N}"
+curl https://sh.rustup.rs -sSf | sh
+. "$HOME/.cargo/env"
+sudo apt install -y libclang-12-dev clang-12 libkrb5-dev
+export LIBCLANG_PATH=/usr/lib/llvm-12/lib
+export LD_LIBRARY_PATH=/usr/lib/llvm-12/lib:$LD_LIBRARY_PATH
+if make install > /dev/null 2>&1; then
+	echo -e "${G}[+] RustHound installed successfully!${N}"
+else
+	echo -e "${R}[-] Failed to install RustHound!${N}"
+	echo -e "${C}[>] Continuing...${N}"	
+fi
+cd ..
+
 cd NetExec
 echo -e "${B}[*] Installing NetExec...${N}"
 if sudo docker build -t netexec:latest . > /dev/null 2>&1; then
