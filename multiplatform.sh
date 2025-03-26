@@ -268,11 +268,11 @@ else
 fi
 
 echo -e "${B}[*] Installing GO${N}"
-wget https://go.dev/dl/go1.23.2.linux-amd64.tar.gz > /dev/null 2>&1
-sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz 
+wget https://go.dev/dl/go1.23.5.linux-amd64.tar.gz > /dev/null 2>&1
+sudo tar -C /usr/local -xzf go1.23.5.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 source ~/.bashrc 
-rm go1.23.2.linux-amd64.tar.gz
+rm go1.23.5.linux-amd64.tar.gz
 echo -e "${G}[+] Done!${N}"
 
 echo -e "${B}[*] Installing garble...${N}"
